@@ -1,0 +1,21 @@
+INICIO
+VAR usuario = 1
+VAR produto = 10
+VAR quantidade = 2
+SERVICO buscar_usuario(usuario) -> nome
+SERVICO usuario_ativo(usuario) -> ativo
+SE ativo ENTAO
+    SERVICO buscar_preco(produto) -> preco
+    SERVICO verificar_estoque(produto) -> estoque
+    SE estoque >= quantidade ENTAO
+        SERVICO calcular_total(preco, quantidade) -> total
+        SERVICO aplicar_desconto(total, 10) -> final
+        SERVICO registrar_pedido(nome, final) -> resultado
+        IMPRIMIR final
+    SENAO
+        IMPRIMIR "Estoque insuficiente"
+    FIM
+SENAO
+    IMPRIMIR "Usuario inativo"
+FIM
+FIM

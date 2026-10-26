@@ -1,0 +1,5 @@
+INICIO
+VAR usuario = 1
+SERVICO buscar_usuario(usuario) -> nome
+IMPRIMIR nome
+FIM

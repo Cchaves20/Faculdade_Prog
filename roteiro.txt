@@ -1,0 +1,128 @@
+ROTEIRO - TRABALHO FINAL INF1022 (OrqLang)
+==========================================
+
+Ideia geral: cada etapa termina com algo funcionando e testavel.
+
+
+ETAPA 0 - Preparar o ambiente
+-----------------------------
+- Instalar o PLY (pip install ply) e conferir Python 3.10 ou mais novo.
+- Em INF-1022, criar arquivos separados para: lexer, parser, gerador e um
+  "main" que recebe o .orq e escreve o .py. Separar desde o inicio ajuda no
+  relatorio e na correcao (lexer e parser valem nota separada).
+- Rodar os testes do kit para confirmar que o runtime funciona. Dentro de
+  orqlang-kit:  python -m unittest discover -s testes -p "test_*.py"
+
+
+ETAPA 1 - So o lexer
+--------------------
+- Lista de palavras reservadas: INICIO, FIM, VAR, SERVICO, IMPRIMIR,
+  VERDADEIRO, FALSO, SE, ENTAO, SENAO, REPITA, VEZES (e depois PARALELO).
+- Dica classica do PLY: NAO criar uma regra para cada palavra reservada.
+  Reconhecer tudo como identificador e depois consultar um dicionario de
+  reservadas. Senao "INICIOx" vira dois tokens.
+- Tokens a definir:
+    * ID, NUM e STR
+    * simbolos  =  (  )  ,  ->  e os operadores
+    * comentarios com # (ignorados)
+    * espacos (ignorados)
+    * contagem de linhas (alimenta as mensagens de erro)
+- Cuidado com operadores que sao prefixo de outros: -> vs -, <= vs <,
+  == vs =. Ler na documentacao do PLY como ele ordena regras definidas como
+  string e como funcao.
+- Caractere ilegal: mensagem com linha e caractere.
+- TESTE: passar os exemplos pelo lexer e imprimir a lista de tokens.
+
+
+ETAPA 2 - Parser da gramatica inicial
+-------------------------------------
+- Escrever so a gramatica da secao 3 do enunciado: programa, comandos,
+  comando (VAR, SERVICO, IMPRIMIR) e expr com os atomos.
+- Nesta etapa o parser apenas ACEITA ou REJEITA, sem gerar nada.
+- Atencao: SERVICO tem a parte opcional "-> ID" e a lista de argumentos pode
+  ser vazia. Em BNF isso vira producoes alternativas.
+- Implementar p_error, incluindo o caso de fim de arquivo inesperado
+  (o "falta FIM").
+- TESTE: 01_basico, 05_dados e 07_sem_retorno devem passar; o caso 1 de
+  invalidos.orq.txt deve ser rejeitado.
+
+
+ETAPA 3 - O gerador
+-------------------
+Decidir COMO gerar o codigo. Dois caminhos:
+- Traducao direta: cada regra do parser devolve um pedaco de texto Python.
+  Mais simples.
+- AST: cada regra devolve um no de arvore, e depois uma funcao percorre a
+  arvore gerando o codigo. Mais organizado, facilita a indentacao.
+Os dois servem. Escolher o que conseguir explicar melhor na entrevista.
+O ponto chato e a INDENTACAO dos blocos: resolver isso logo, mesmo antes de
+existirem blocos.
+- TESTE: gerar o .py, rodar com PYTHONPATH apontando para o kit e comparar
+  com o .esperado.txt.
+
+
+ETAPA 4 - Script de testes
+--------------------------
+Antes de continuar, fazer um script que, para cada exemplo:
+  1. transpila o .orq;
+  2. executa o Python gerado;
+  3. compara a saida com o esperado.
+     ATENCAO: nos arquivos 01 a 06 o "\n" esta escrito literalmente (barra e
+     n), so o 07 tem quebras de linha reais. Tratar os dois formatos.
+Tambem deve confirmar que os invalidos sao rejeitados.
+Assim cada extensao nova vira so "rodar o script".
+
+
+ETAPA 5 - Expressoes
+--------------------
+- Usar a tabela "precedence" do PLY seguindo exatamente a ordem do enunciado.
+- Menos unario: pesquisar como o PLY trata %prec com um token ficticio como
+  UMINUS (mesmo "-" com precedencia diferente).
+- Comparacoes nao encadeadas: declarar as comparacoes como "nonassoc" na
+  tabela. Assim "1 < x < 10" vira erro sintatico automaticamente.
+- Na geracao, colocar parenteses em volta de cada subexpressao: forma mais
+  segura de nao perder a precedencia original.
+- TESTE: 2+3*4 = 14 ; (2+3)*4 = 20 ; 10-3-2 = 5 ; -5+8 = 3
+
+
+ETAPA 6 - SE e REPITA
+---------------------
+- As regras de bloco reaproveitam "comandos" dentro delas. O SENAO ligado ao
+  SE mais proximo sai naturalmente porque cada bloco tem seu proprio FIM,
+  mas observar se o PLY reporta conflitos.
+- Ficar de olho no arquivo parser.out que o PLY gera: ali aparecem conflitos
+  shift/reduce e reduce/reduce. Objetivo: zero conflitos nao explicados.
+- REPITA: pensar em qual construcao Python avalia a contagem uma unica vez.
+  Cuidado com o nome da variavel de controle do laco para nao colidir com
+  variaveis do usuario.
+- TESTE: 02_loja, 03_monitoramento, 04_repeticao e os invalidos 2 e 3.
+
+
+ETAPA 7 - (BONUS) PARALELO
+--------------------------
+- Ler o runtime/orqlang_runtime.py com calma: recebe pares
+  (nome, funcao sem argumentos) e devolve um dicionario.
+- Pegadinha das lambdas em Python: os argumentos devem ser avaliados ANTES
+  de rodar em paralelo. Pensar em como garantir isso no codigo gerado.
+- Checagem de variaveis de saida repetidas: pode ficar na acao da regra do
+  parser, levantando um erro.
+- TESTE: o exemplo 06 deve imprimir 300 e levar uns 2 segundos, nao 3.
+
+
+ETAPA 8 - Entregaveis
+---------------------
+- Criar seus proprios .orq de teste: pelo menos 5, com pelo menos um
+  invalido. Cobrir casos que o professor pode testar ao vivo: operador sem
+  operando, caractere ilegal, comparacao encadeada.
+- README com instrucoes de instalacao e execucao.
+- Relatorio curto: gramatica final (copiar das regras do parser), decisoes
+  de traducao, testes e limitacoes.
+  Limitacao a citar: identificadores que sao palavras reservadas do Python
+  (if, print, None...) quebrariam o codigo gerado.
+- Nomes e matriculas dos integrantes. Tudo em um unico ZIP.
+
+
+CONSELHO GERAL
+--------------
+Fazer um commit (ou uma copia) ao final de cada etapa que funcionar. Se algo
+quebrar ao adicionar expressoes ou blocos, da para voltar rapido.
