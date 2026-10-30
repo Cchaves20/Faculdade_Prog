@@ -1,0 +1,13 @@
+# testa precedencia e associatividade das expressoes
+INICIO
+IMPRIMIR 2 + 3 * 4
+IMPRIMIR (2 + 3) * 4
+IMPRIMIR 10 - 3 - 2
+IMPRIMIR -5 + 8
+IMPRIMIR -2 * 3
+IMPRIMIR 5 / 2
+VAR x = 7
+IMPRIMIR x * 2 > 10
+IMPRIMIR x == 7
+IMPRIMIR x - 1 != 6
+FIM

@@ -1,0 +1,16 @@
+# Cada bloco abaixo e um programa INVALIDO independente.
+# 1: sem FIM
+INICIO
+IMPRIMIR 1
+
+# 2: sem ENTAO
+INICIO
+SE 1
+IMPRIMIR 2
+FIM
+FIM
+
+# 3: chamada sem fechamento
+INICIO
+SERVICO buscar_usuario(1 -> nome
+FIM

@@ -1,0 +1,5 @@
+# caractere ilegal
+INICIO
+VAR x = 10 @ 2
+IMPRIMIR x
+FIM

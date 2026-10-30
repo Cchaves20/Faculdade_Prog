@@ -1,0 +1,7 @@
+# comparacao encadeada
+INICIO
+VAR x = 5
+SE 1 < x < 10 ENTAO
+    IMPRIMIR x
+FIM
+FIM

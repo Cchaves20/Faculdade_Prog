@@ -1,0 +1,8 @@
+INICIO
+VAR i = 1
+REPITA 3 VEZES
+    SERVICO registrar_log("Execucao") -> ok
+    IMPRIMIR i
+    VAR i = i + 1
+FIM
+FIM

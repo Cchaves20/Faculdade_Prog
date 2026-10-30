@@ -1,0 +1,5 @@
+# operador sem operando
+INICIO
+VAR x = 1 +
+IMPRIMIR x
+FIM
