@@ -1,0 +1,5 @@
+INICIO
+SERVICO registrar_log("Inicio")
+SERVICO buscar_usuario(1) -> nome
+IMPRIMIR nome
+FIM

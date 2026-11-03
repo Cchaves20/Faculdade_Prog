@@ -1,0 +1,10 @@
+INICIO
+VAR sensor = 102
+SERVICO ler_temperatura(sensor) -> temperatura
+SERVICO verificar_limite(temperatura, 60) -> alta
+SE alta ENTAO
+    SERVICO gerar_alerta("Temperatura alta") -> ok
+SENAO
+    IMPRIMIR "Temperatura normal"
+FIM
+FIM

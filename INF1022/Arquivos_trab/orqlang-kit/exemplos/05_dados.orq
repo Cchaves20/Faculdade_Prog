@@ -1,0 +1,5 @@
+INICIO
+SERVICO carregar_valores("a") -> valores
+SERVICO calcular_media(valores) -> media
+IMPRIMIR media
+FIM

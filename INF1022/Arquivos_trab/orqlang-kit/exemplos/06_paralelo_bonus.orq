@@ -1,0 +1,8 @@
+INICIO
+PARALELO
+    SERVICO consultar_sistema_a(10) -> a
+    SERVICO consultar_sistema_b(10) -> b
+FIM
+SERVICO combinar_resultados(a, b) -> resultado
+IMPRIMIR resultado
+FIM
