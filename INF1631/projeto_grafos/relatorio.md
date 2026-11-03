@@ -6,8 +6,8 @@ INF1631 — 3WB — 2026 — **Grupo C**
 
 Integrantes:
 EDUARDO NADAI - 2311248
-CAIO FARIA BRITO - 
-MARCELO BESSA - 
+CAIO FARIA BRITO - 2410162
+MARCELO BESSA - 2220426
 
 Parâmetros do grupo: **n = 10**, **p = 0,30**, **seed = 391**
 
