@@ -1,0 +1,6 @@
+INICIO
+PARALELO
+    SERVICO consultar_sistema_a(1) -> a
+    SERVICO consultar_sistema_b(2) -> a
+FIM
+FIM

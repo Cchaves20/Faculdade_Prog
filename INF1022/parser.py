@@ -107,6 +107,45 @@ def p_comando_repita(p):
     p[0] = ["for _repita_contador in range(" + p[2] + "):"]
     p[0] += identar(p[4])
 
+def p_chamada_par(p):
+    """ chamada_par : SERVICO ID ABRE_PAR argumentos FECHA_PAR SETA ID
+                    | SERVICO ID ABRE_PAR FECHA_PAR SETA ID """
+    if len(p) == 8:
+        p[0] = (p[7], p[2], p[4])
+    else:
+        p[0] = (p[6], p[2], "")
+
+def p_chamadas_par(p):
+    """ chamadas_par : chamada_par chamadas_par
+                     | chamada_par """
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[2]
+
+def p_comando_paralelo(p):
+    """ comando : PARALELO chamadas_par FIM """
+    chamadas = p[2]
+    global houve_erro
+    nomes = []
+    for saida, servico, args in chamadas:
+        if saida in nomes:
+            print("Erro semantico na linha", p.lineno(1), "- saida repetida no PARALELO:", saida)
+            houve_erro = True
+        nomes.append(saida)
+
+    p[0] = ["_paralelo = executar_paralelo(["]
+    for saida, servico, args in chamadas:
+        if args == "":
+            tupla = "()"
+        else:
+            tupla = "(" + args + ",)"
+        p[0].append('    ("' + saida + '", lambda _args=' + tupla + ': ' + servico + '(*_args)),')
+    p[0].append("])")
+    for saida, servico, args in chamadas:
+        p[0].append(saida + ' = _paralelo["' + saida + '"]')
+
+
 houve_erro = False
 
 def p_error(p):
