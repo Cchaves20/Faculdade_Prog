@@ -1,0 +1,60 @@
+Numero de vertices: 10
+Probabilidade p: 0.30
+Seed: 391
+
+Grafo Euleriano encontrado!
+Numero de grafos gerados: 372
+
+Matriz de adjacencia:
+      1  2  3  4  5  6  7  8  9 10
+  1:  0  1  0  0  1  1  1  0  0  0
+  2:  1  0  0  0  0  0  1  0  0  0
+  3:  0  0  0  0  0  1  0  0  1  0
+  4:  0  0  0  0  0  0  1  0  0  1
+  5:  1  0  0  0  0  0  0  0  0  1
+  6:  1  0  1  0  0  0  1  1  0  0
+  7:  1  1  0  1  0  1  0  0  1  1
+  8:  0  0  0  0  0  1  0  0  0  1
+  9:  0  0  1  0  0  0  1  0  0  0
+ 10:  0  0  0  1  1  0  1  1  0  0
+
+Arestas (15):
+(1,2) (1,5) (1,6) (1,7) (2,7) (3,6) (3,9) (4,7) (4,10) (5,10) (6,7) (6,8) (7,9) (7,10) (8,10)
+
+Graus:
+v1: 4
+v2: 2
+v3: 2
+v4: 2
+v5: 2
+v6: 4
+v7: 6
+v8: 2
+v9: 2
+v10: 4
+
+Conexo (vertices de grau nao nulo): sim
+Todos os graus sao pares: sim
+Euleriano: sim
+
+Circuito de Euler:
+1 -> 2 -> 7 -> 1 -> 5 -> 10 -> 4 -> 7 -> 6 -> 3 -> 9 -> 7 -> 10 -> 8 -> 6 -> 1
+Validacao do circuito: OK
+--------------------------------
+Experimento com 1000 grafos (n = 10, p = 0.30, seed = 391):
+Tempo gasto na geracao dos grafos: 0.0067 s
+Tempo total (geracao + verificacao): 0.0279 s
+Grafos Eulerianos: 1
+Proporcao: 0.001
+
+Detalhamento (para a analise):
+  Grafos com todos os graus pares: 1
+  Grafos com vertices de grau nao nulo conexos: 940
+  Grafos sem arestas: 0
+  Numero de vertices de grau impar por grafo:
+     0 vertices impares: 1 grafos
+     2 vertices impares: 80 grafos
+     4 vertices impares: 393 grafos
+     6 vertices impares: 430 grafos
+     8 vertices impares: 93 grafos
+    10 vertices impares: 3 grafos
