@@ -3,7 +3,11 @@ import ply.yacc as yacc
 
 from lexer import tokens, construir_lexer
 
-precedence = (('nonassoc', 'IGUAL', 'DIFERENTE', 'MENOR', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL'),
+# de cima pra baixo vai aumentando a precedencia (OU eh a menor, UMINUS a maior)
+precedence = (('left', 'OU'),
+              ('left', 'E'),
+              ('right', 'NAO'),
+              ('nonassoc', 'IGUAL', 'DIFERENTE', 'MENOR', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL'),
               ('left', 'MAIS', 'MENOS'),
               ('left', 'MULT', 'DIV'),
               ('right', 'UMINUS'))
@@ -85,6 +89,18 @@ def p_expr_binaria(p):
 def p_expr_menos(p):
     """ expr : MENOS expr %prec UMINUS """
     p[0] = "(-" + p[2] + ")"
+ 
+def p_expr_logica(p):
+    """ expr : expr E expr
+             | expr OU expr """
+    if p[2] == "E":
+        p[0] = "(" + p[1] + " and " + p[3] + ")"
+    else:
+        p[0] = "(" + p[1] + " or " + p[3] + ")"
+
+def p_expr_nao(p):
+    """ expr : NAO expr """
+    p[0] = "(not " + p[2] + ")"
 
 def p_expr_parenteses(p):
     """ expr : ABRE_PAR expr FECHA_PAR """
@@ -124,8 +140,9 @@ def p_chamadas_par(p):
         p[0] = [p[1]] + p[2]
 
 def p_comando_paralelo(p):
-    """ comando : PARALELO chamadas_par FIM """
-    chamadas = p[2]
+    # chamada_par + chamadas_par garante pelo menos 2 chamadas, como o enunciado pede
+    """ comando : PARALELO chamada_par chamadas_par FIM """
+    chamadas = [p[2]] + p[3]
     global houve_erro
     nomes = []
     for saida, servico, args in chamadas:

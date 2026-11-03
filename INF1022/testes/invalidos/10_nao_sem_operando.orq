@@ -1,0 +1,5 @@
+# NAO sem nada depois
+INICIO
+VAR x = 1
+IMPRIMIR x E NAO
+FIM

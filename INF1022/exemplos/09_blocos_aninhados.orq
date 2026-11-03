@@ -1,0 +1,31 @@
+# blocos dentro de blocos
+# o SENAO tem que ficar com o SE mais de dentro
+INICIO
+VAR i = 0
+REPITA 4 VEZES
+    VAR i = i + 1
+    SE i <= 2 ENTAO
+        IMPRIMIR "pequeno"
+    SENAO
+        SE i == 3 ENTAO
+            IMPRIMIR "tres"
+        SENAO
+            IMPRIMIR "grande"
+        FIM
+    FIM
+FIM
+
+# mudar o n dentro do laco nao pode mudar quantas vezes ele roda
+VAR n = 2
+REPITA n VEZES
+    VAR n = n + 10
+    IMPRIMIR n
+FIM
+
+# isso aqui nao pode imprimir nada
+REPITA 0 VEZES
+    IMPRIMIR "nunca"
+FIM
+
+IMPRIMIR i
+FIM

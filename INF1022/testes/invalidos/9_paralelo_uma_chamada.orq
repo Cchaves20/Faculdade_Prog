@@ -1,0 +1,7 @@
+# paralelo com uma chamada so (o enunciado pede pelo menos duas)
+INICIO
+PARALELO
+    SERVICO consultar_sistema_a(1) -> a
+FIM
+IMPRIMIR a
+FIM

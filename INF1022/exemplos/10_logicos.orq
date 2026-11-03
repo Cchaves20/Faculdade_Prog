@@ -1,0 +1,20 @@
+# E, OU e NAO (a parte opcional)
+INICIO
+VAR x = 5
+IMPRIMIR x > 3 E x < 10
+IMPRIMIR x < 3 OU x == 5
+IMPRIMIR NAO x > 3
+
+# E vem antes do OU, entao o primeiro da True e o segundo False
+IMPRIMIR VERDADEIRO OU VERDADEIRO E FALSO
+IMPRIMIR (VERDADEIRO OU VERDADEIRO) E FALSO
+
+# NAO pega so o FALSO do lado dele
+IMPRIMIR NAO FALSO E FALSO
+
+# usuario 2 eh o Bruno, que ta inativo
+SERVICO usuario_ativo(2) -> ativo
+SE NAO ativo E x >= 5 ENTAO
+    IMPRIMIR "usuario inativo"
+FIM
+FIM
